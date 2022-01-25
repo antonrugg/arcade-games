@@ -1,3 +1,8 @@
+:root{
+    --bg-color: blue;
+    --accent-color: #f70d68;
+}
+
 *{
     margin: 0;
     padding: 0;
@@ -5,7 +10,7 @@
 }
 
 body{
-    background-color: blue;
+    background-color: var(--bg-color);
     font-family: 'Press Start 2P', cursive;
     line-height: 1.4;
     color: #ffffff;
@@ -37,5 +42,31 @@ a{
 }
 
 a:hover{
-    color: #f70d68
+    color: var(--accent-color);
+}
+
+/* STRUTTURA BASE PAGINE DEI GIOCHI */
+
+.board{
+    display: flex;
+    flex-direction: row;
+}
+
+.game-area{
+    padding: 12px;
+}
+
+.game-data{
+    padding: 12px;
+    width: 240px;
+}
+
+h1{
+    font-size: 36px;
+    margin-bottom: 16px;
+}
+
+p{
+    font-size: 16px;
+    margin-bottom: 20px;
 }
