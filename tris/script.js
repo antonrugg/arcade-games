@@ -29,9 +29,9 @@ for (let i = 0; i < cells.length; i++){
         let hasWon = checkVictory();
 
         if (hasWon) {
-            alert(`${sign} ha vinto`)
+            showAlert(`${sign} ha vinto`);
         } else if(turn === 9){
-            
+            showAlert('pareggio');
         }
 
     })
@@ -61,3 +61,4 @@ function checkVictory() {
     }
     return false;
 }
+

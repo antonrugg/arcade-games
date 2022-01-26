@@ -54,6 +54,7 @@ a:hover{
 
 .game-area{
     padding: 12px;
+    position: relative;
 }
 
 .game-data{
@@ -69,4 +70,24 @@ h1{
 p{
     font-size: 16px;
     margin-bottom: 20px;
+}
+
+/* ALERT */
+
+.game-alert{
+    background-color: rgba(0, 255, 0, 0.5);
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.game-alert-message{
+    font-size: 40px;
+    padding: 20px;
+    background-color: var(--accent-color);
 }
