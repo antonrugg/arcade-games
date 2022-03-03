@@ -4,7 +4,9 @@ const rxc = size * size;
 const cells = [];
 
 const aliens = [
-    0, 1, 2, 3, 4, 5
+    0, 1, 2, 3, 4, 5, 6, 7, 8, 9,
+    15, 16, 17, 18, 19, 20, 21, 22, 23, 24,
+    30, 31, 32, 33, 34, 35, 36, 37, 38, 39
     
 ];
 
@@ -20,7 +22,7 @@ for (let i = 0; i < rxc; i++) {
 
 function drawAliens() {
     for (let i = 0; i < aliens.length; i++) {
-        if (aliensKilled.includes(aliens[i]) ) {
+        if (!aliensKilled.includes(i) ) {
             cells[aliens[i]].classList.add('alien'); 
         }
     }
@@ -121,7 +123,7 @@ function shoot(event) {
 
 
             const killed = aliens.indexOf(laserIdx);
-            aliensKilled..push(killed);
+            aliensKilled.push(killed);
 
             return;
         }
