@@ -8,6 +8,8 @@ const aliens = [
     
 ];
 
+const aliensKilled = [];
+
 for (let i = 0; i < rxc; i++) {
     const cell = document.createElement('div');
     // cell.innerText = i;
@@ -18,7 +20,9 @@ for (let i = 0; i < rxc; i++) {
 
 function drawAliens() {
     for (let i = 0; i < aliens.length; i++) {
-        cells[aliens[i]].classList.add('alien'); 
+        if (aliensKilled.includes(aliens[i]) ) {
+            cells[aliens[i]].classList.add('alien'); 
+        }
     }
 }
 
@@ -68,12 +72,77 @@ cells[spaceshipIdx].classList.add('spaceship');
 
 
 function moveSpaceship(event) {
-    if (event.code !== 'Space') return;
+    const leftEdge = spaceshipIdx % size === 0;
+    const rightEdge = spaceshipIdx % size === size - 1;
 
-    console.log('move', event);
+
+    cells[spaceshipIdx].classList.remove('spaceship');
+    if (event.code === 'ArrowLeft' && !leftEdge) {
+        // mi muovo a sinistra
+        spaceshipIdx--;
+    } else if (event.code === 'ArrowRight' && !rightEdge) {
+        //mi muovo a destra
+        spaceshipIdx++;
+    }
+    cells[spaceshipIdx].classList.add('spaceship');
 }
 
-document.addEventListener('keydown', moveSpaceship)
 
 
-moveAliens();
+
+document.addEventListener('keydown', moveSpaceship);
+
+
+//shoot
+function shoot(event) {
+    if (event.code !== 'Space') return;
+
+    let laserIdx = spaceshipIdx;
+    let laserIntVal = null;
+    function moveLaser() {
+        cells[laserIdx].classList.remove('laser');
+        laserIdx = laserIdx - size;
+
+        if (laserIdx < 0) {
+            clearInterval(laserIntVal);
+            return;
+        }
+
+        // check for shoot
+
+        if (cells[laserIdx].classList.contains('alien')) {
+            //clear del set interval
+            clearInterval(laserIntVal);
+            cells[laserIdx].classList.remove('alien', 'laser');
+            cells[laserIdx].classList.add('boom');
+            setTimeout(function () {
+                cells[laserIdx].classList.remove('boom');
+            }, 200);
+
+
+            const killed = aliens.indexOf(laserIdx);
+            aliensKilled..push(killed);
+
+            return;
+        }
+
+
+
+        cells[laserIdx].classList.add('laser');
+    }
+
+    laserIntVal = setInterval(moveLaser, 200);
+
+    
+
+    console.log('shoot');
+}
+
+
+document.addEventListener('keydown', shoot);
+
+
+    
+
+
+    
