@@ -1,7 +1,11 @@
 const grid = document.querySelector('#grid');
+const scoreEl = document.querySelector('#score');
+
+
 const size = 15;
 const rxc = size * size;
 const cells = [];
+const speed = 400;
 
 const aliens = [
     0, 1, 2, 3, 4, 5, 6, 7, 8, 9,
@@ -11,6 +15,9 @@ const aliens = [
 ];
 
 const aliensKilled = [];
+let alienMoveIntVal = null;
+let score = 0;
+scoreEl.innerText = score;
 
 for (let i = 0; i < rxc; i++) {
     const cell = document.createElement('div');
@@ -19,6 +26,25 @@ for (let i = 0; i < rxc; i++) {
     grid.appendChild(cell);
     
 }
+
+
+function checkForHumanWin() {
+    if (aliensKilled.length === aliens.length) {
+        showAlert('HUMAN WINS!');
+        clearInterval(alienMoveIntVal);
+    }
+}
+
+function checkForAlienWin() {
+    for (let i = 0; i < aliens.length; i++){
+        if (!aliensKilled.includes(aliens[i])&&aliens[i] >= spaceshipIdx) {
+            showAlert('ALIENS WINS!');
+            clearInterval(alienMoveIntVal);
+        }
+    }
+}
+
+
 
 function drawAliens() {
     for (let i = 0; i < aliens.length; i++) {
@@ -62,12 +88,14 @@ function moveAliens() {
     for (let i = 0; i < aliens.length; i++){
         aliens[i] = aliens[i] + step;
     }
-
+    checkForAlienWin();
     drawAliens();
     
 }
 
-setInterval(moveAliens, 500);
+drawAliens();
+
+alienMoveIntVal = setInterval(moveAliens, speed);
 
 let spaceshipIdx = 217;
 cells[spaceshipIdx].classList.add('spaceship');
@@ -124,6 +152,12 @@ function shoot(event) {
 
             const killed = aliens.indexOf(laserIdx);
             aliensKilled.push(killed);
+
+            //Incremento punteggio score
+            score++;
+            scoreEl.innerText = score;
+
+            checkForHumanWin();
 
             return;
         }
